@@ -11,6 +11,8 @@ export default function TodosPage() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
+      <h1>Welcome to Next.js!</h1>
+
       <section className="main">
         <ul>
           <li>
