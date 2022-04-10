@@ -1,15 +1,12 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { TodoDbEdgeDb as TodoDb } from "../../../adapters/TodoDb/TodoDbEdgeDb";
+import { TodoDbEdgeDb } from "../../../adapters/TodoDb/TodoDbEdgeDb";
+import { TaskDbInterface } from "../../../types/todo";
 import * as UseCases from "../../../useCases/todo";
 
-const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+const handler = async (req: NextApiRequest, res: NextApiResponse, db: TaskDbInterface = new TodoDbEdgeDb()) => {
   // get id and title from request data
   const id: string | undefined = req.query.id?.[0];
   const title: string | undefined = req.body.title;
-
-  const db = new TodoDb();
-
-  console.log(`${req.method} ${req.url}`);
 
   // GET /api/todo => list tasks
   if (req.method === "GET" && !id) {

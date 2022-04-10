@@ -4,6 +4,9 @@ module default {
     required property completed -> bool {
       default := false;
     }
+    required property created_at -> datetime {
+      default := datetime_current()
+    }
   }
 
   type Person {

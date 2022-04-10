@@ -8,8 +8,8 @@ const CREATE_TODO_QUERY = `insert Todo {
 const LIST_TODOS_QUERY = `select Todo {
   id,
   title,
+  created_at,
   completed,
-
 }`;
 
 const GET_TODO_BY_ID_QUERY = `${LIST_TODOS_QUERY}
@@ -22,7 +22,7 @@ const TOGGLE_COMPLETED_QUERY = `update Todo
 `;
 
 export class TodoDbEdgeDb implements TaskDbInterface {
-  client: Client;
+  private client: Client;
 
   constructor() {
     this.client = createClient();

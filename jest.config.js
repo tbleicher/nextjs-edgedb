@@ -14,6 +14,7 @@ const customJestConfig = {
   // Add more setup options before each test is run
   setupFilesAfterEnv: ["<rootDir>/jest.setup.js"],
   testEnvironment: "jest-environment-jsdom",
+  testPathIgnorePatterns: ["/node_modules/", "/__tests__/helpers/"],
 };
 
 // createJestConfig is exported this way to ensure that
