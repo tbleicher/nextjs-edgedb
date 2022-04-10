@@ -1,26 +1,20 @@
-import "todomvc-app-css/index.css";
-import "todomvc-common/base.css";
-
 import Head from "next/head";
+
+import { ReactQueryDevtools } from "react-query/devtools";
+
+import { TodosApp } from "../components/Todos/TodosApp";
 
 export default function TodosPage() {
   return (
     <>
       <Head>
-        <title>Next.js Index</title>
+        <title>Todos</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <section className="main">
-        <ul>
-          <li>
-            <a href="./todo">Todo</a>
-          </li>
-        </ul>
-      </section>
+      <TodosApp />
 
       <footer className="info">
-        {/* Change this out with your name and url ↓ */}
         <p>
           Created with <a href="http://edgedb.com">EdgeDB</a>
         </p>
@@ -28,6 +22,8 @@ export default function TodosPage() {
           Part of <a href="http://todomvc.com">TodoMVC</a>
         </p>
       </footer>
+
+      <ReactQueryDevtools initialIsOpen={false} />
     </>
   );
 }
