@@ -1,7 +1,5 @@
 import Head from "next/head";
 
-import { ReactQueryDevtools } from "react-query/devtools";
-
 import { TodosApp } from "../components/Todos/TodosApp";
 
 export default function TodosPage() {
@@ -22,8 +20,6 @@ export default function TodosPage() {
           Part of <a href="http://todomvc.com">TodoMVC</a>
         </p>
       </footer>
-
-      <ReactQueryDevtools initialIsOpen={false} />
     </>
   );
 }
