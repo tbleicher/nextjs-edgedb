@@ -6,3 +6,10 @@ export type Task = {
 };
 
 export type TaskFilterOption = "all" | "active" | "completed";
+
+export interface TaskDbInterface {
+  createTask(title: string): Promise<Task | null>;
+  getTodoById(id: string): Promise<Task | null>;
+  listTasks(): Promise<Task[]>;
+  toggleCompleted(id: string): Promise<Task | null>;
+}
