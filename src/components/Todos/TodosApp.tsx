@@ -1,17 +1,16 @@
-import "todomvc-app-css/index.css";
-// import "todomvc-common/base.css";
-// import "./TodosApp.css";
-
 import { useState } from "react";
 import { useQuery } from "react-query";
 
 import axios from "axios";
 
-import { TodosList } from "./TodosList";
+import { AddTodoInput } from "./AddTodoInput";
+import { ClearCompletedButton } from "./ClearCompletedButton";
 import { Task, TaskFilterOption } from "../../types/todo";
 import { TodosCounter } from "./TodosCounter";
+import { TodosList } from "./TodosList";
 import { TodosListFilter } from "./TodosListFilter";
-import { AddTodoInput } from "./AddTodoInput";
+
+import styles from "./TodosApp.module.css";
 
 type TasksListQueryState = {
   isLoading: boolean;
@@ -36,7 +35,7 @@ function filterTasksByStatus(status: TaskFilterOption) {
 }
 
 function sortByCreatedAt(a: Task, b: Task) {
-  return a.createdAt.getTime() - b.createdAt.getTime();
+  return b.createdAt.getTime() - a.createdAt.getTime();
 }
 
 function useTasksList(): TasksListQueryState {
@@ -65,23 +64,24 @@ export function TodosApp() {
 
   if (isLoading)
     return (
-      <section className="todoapp">
+      <section className={styles.todoapp}>
         <div>Loading...</div>
       </section>
     );
 
   return (
-    <section className="todoapp">
+    <section className={styles.todoapp}>
       <header className="header">
-        <h1>Todos</h1>
+        <h1 className={styles.title}>Todos</h1>
         <AddTodoInput refetchTasks={refetchTasks} />
       </header>
 
       <TodosList refetchTasks={refetchTasks} tasks={filteredTasks} />
 
-      <footer className="footer">
+      <footer id="tooter" className={styles.footer}>
         <TodosCounter tasks={tasks} />
         <TodosListFilter filter={filter} setFilter={setFilter} />
+        <ClearCompletedButton tasks={tasks} />
       </footer>
     </section>
   );

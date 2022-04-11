@@ -2,6 +2,8 @@ import axios from "axios";
 import { useMutation } from "react-query";
 import { onError } from "../../utils/api";
 
+import styles from "./AddTodoInput.module.css";
+
 export function AddTodoInput({ refetchTasks }: { refetchTasks: () => void }) {
   const addTask = useMutation((title: string) => axios.post("/api/todo", { title }), {
     onSuccess: refetchTasks,
@@ -10,7 +12,7 @@ export function AddTodoInput({ refetchTasks }: { refetchTasks: () => void }) {
 
   return (
     <input
-      className="new-todo"
+      className={styles.newtodo}
       placeholder="What needs to be done?"
       autoFocus
       onKeyDown={(e) => {

@@ -1,6 +1,8 @@
 import { Dispatch, SetStateAction } from "react";
 import { TaskFilterOption } from "../../types/todo";
 
+import styles from "./TodosListFilter.module.css";
+
 interface TodosListFilterProps {
   filter: TaskFilterOption;
   setFilter: Dispatch<SetStateAction<TaskFilterOption>>;
@@ -8,11 +10,11 @@ interface TodosListFilterProps {
 
 export function TodosListFilter({ filter, setFilter }: TodosListFilterProps) {
   return (
-    <ul className="filters">
+    <ul className={styles.filters}>
       <li>
         <a
           style={{ cursor: "pointer" }}
-          className={filter === "all" ? "selected" : ""}
+          className={filter === "all" ? "selected" : undefined}
           onClick={() => setFilter("all")}
         >
           All
@@ -21,7 +23,7 @@ export function TodosListFilter({ filter, setFilter }: TodosListFilterProps) {
       <li>
         <a
           style={{ cursor: "pointer" }}
-          className={filter === "active" ? "selected" : ""}
+          className={filter === "active" ? "selected" : undefined}
           onClick={() => setFilter("active")}
         >
           Active
@@ -30,7 +32,7 @@ export function TodosListFilter({ filter, setFilter }: TodosListFilterProps) {
       <li>
         <a
           style={{ cursor: "pointer" }}
-          className={filter === "completed" ? "selected" : ""}
+          className={filter === "completed" ? "selected" : undefined}
           onClick={() => setFilter("completed")}
         >
           Completed
