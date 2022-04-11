@@ -7,7 +7,7 @@ interface ListItemProps {
 
 export function ListItem({ task, toggleTask }: ListItemProps) {
   return (
-    <li key={task.id} className={task.completed ? "completed" : ""}>
+    <li key={task.id} className={task.completed ? "completed" : undefined}>
       <div className="view">
         <input className="toggle" type="checkbox" checked={task.completed} onChange={() => toggleTask(task.id)} />
         <label>{task.title}</label>

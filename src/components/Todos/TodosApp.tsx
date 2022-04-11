@@ -1,5 +1,6 @@
 import "todomvc-app-css/index.css";
-import "todomvc-common/base.css";
+// import "todomvc-common/base.css";
+// import "./TodosApp.css";
 
 import { useState } from "react";
 import { useQuery } from "react-query";
@@ -11,6 +12,16 @@ import { Task, TaskFilterOption } from "../../types/todo";
 import { TodosCounter } from "./TodosCounter";
 import { TodosListFilter } from "./TodosListFilter";
 import { AddTodoInput } from "./AddTodoInput";
+
+type TasksListQueryState = {
+  isLoading: boolean;
+  refetchTasks: () => {};
+  tasks: Task[];
+};
+
+type TaskSerialised = Omit<Task, "createdAt"> & {
+  createdAt: string;
+};
 
 function filterTasksByStatus(status: TaskFilterOption) {
   return (task: Task): boolean => {
@@ -24,19 +35,25 @@ function filterTasksByStatus(status: TaskFilterOption) {
   };
 }
 
-type TasksListQueryState = {
-  isLoading: boolean;
-  refetchTasks: () => {};
-  tasks: Task[];
-};
+function sortByCreatedAt(a: Task, b: Task) {
+  return a.createdAt.getTime() - b.createdAt.getTime();
+}
 
 function useTasksList(): TasksListQueryState {
-  const allTasks = useQuery<Task[]>("todos", () => axios.get("/api/todo").then((res) => res.data));
+  const queryState = useQuery<TaskSerialised[], Error, Task[]>(
+    "todos",
+    () => axios.get("/api/todo").then((res) => res.data),
+    {
+      select: (tasks) => tasks.map((task) => ({ ...task, createdAt: new Date(task.createdAt) })),
+    }
+  );
+
+  const tasks = queryState.data?.sort(sortByCreatedAt) || [];
 
   return {
-    isLoading: allTasks.isLoading,
-    refetchTasks: allTasks.refetch,
-    tasks: allTasks.data || [],
+    isLoading: queryState.isLoading,
+    refetchTasks: queryState.refetch,
+    tasks,
   };
 }
 

@@ -8,7 +8,7 @@ const CREATE_TODO_QUERY = `insert Todo {
 const LIST_TODOS_QUERY = `select Todo {
   id,
   title,
-  created_at,
+  createdAt := .created_at,
   completed,
 }`;
 
