@@ -1,22 +1,54 @@
 import { createClient, Client } from "edgedb";
 import { Task, TaskDbInterface } from "../../types/todo";
 
-const CREATE_TODO_QUERY = `insert Todo {
-  title := <str>$title
-}`;
-
-const LIST_TODOS_QUERY = `select Todo {
+const TODO_DETAILS = `{
   id,
   title,
   createdAt := .created_at,
   completed,
 }`;
 
-const GET_TODO_BY_ID_QUERY = `${LIST_TODOS_QUERY}
+const MARK_ALL_TASKS_COMPLETED_QUERY = `
+with updated_todos := (
+  with 
+    todos_to_update := ( 
+      select Todo 
+      filter .completed = false
+    ) 
+    update Todo 
+      filter Todo in todos_to_update
+      set { completed := true }
+)
+select Todo ${TODO_DETAILS} 
+  filter Todo in updated_todos
+`;
+
+const CREATE_TODO_QUERY = `
+insert Todo {
+  title := <str>$title
+}`;
+
+const DELETE_COMPLETED_TASKS = `
+delete Todo
+  filter .completed = true
+`;
+
+const DELETE_TODO_BY_ID_QUERY = `
+delete Todo
   filter .id = <uuid>$id
 `;
 
-const TOGGLE_COMPLETED_QUERY = `update Todo
+const LIST_TODOS_QUERY = `
+select Todo ${TODO_DETAILS}
+`;
+
+const GET_TODO_BY_ID_QUERY = `
+select Todo ${TODO_DETAILS}
+  filter .id = <uuid>$id
+`;
+
+const TOGGLE_COMPLETED_QUERY = `
+update Todo
   filter .id = <uuid>$id
   set { completed := not .completed }
 `;
@@ -36,21 +68,41 @@ export class TodoDbEdgeDb implements TaskDbInterface {
     return this.getTodoById(createdTodo.id);
   }
 
-  async getTodoById(id: string): Promise<Task | null> {
-    return this.client.querySingle(GET_TODO_BY_ID_QUERY, {
+  async deleteCompletedTasks(): Promise<boolean> {
+    await this.client.query(DELETE_COMPLETED_TASKS);
+
+    return true;
+  }
+
+  async deleteTaskById(id: string): Promise<boolean> {
+    await this.client.querySingle(DELETE_TODO_BY_ID_QUERY, {
       id,
-    }) as Promise<Task>;
+    });
+
+    return true;
+  }
+
+  async getTodoById(id: string): Promise<Task | null> {
+    return this.client.querySingle<Task>(GET_TODO_BY_ID_QUERY, {
+      id,
+    });
   }
 
   async listTasks(): Promise<Task[]> {
-    return this.client.query(LIST_TODOS_QUERY) as Promise<Task[]>;
+    return this.client.query<Task>(LIST_TODOS_QUERY);
+  }
+
+  async markAllTasksCompleted(): Promise<Task[]> {
+    const updated = await this.client.query<Task>(MARK_ALL_TASKS_COMPLETED_QUERY);
+
+    return updated;
   }
 
   async toggleCompleted(id: string): Promise<Task | null> {
-    const createdTodo = (await this.client.querySingle(TOGGLE_COMPLETED_QUERY, {
+    const updatedTodo = await this.client.querySingle<Task>(TOGGLE_COMPLETED_QUERY, {
       id,
-    })) as { id: string };
+    });
 
-    return this.getTodoById(createdTodo.id);
+    return this.getTodoById(updatedTodo?.id || "");
   }
 }

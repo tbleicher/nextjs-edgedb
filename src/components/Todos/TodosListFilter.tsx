@@ -1,7 +1,8 @@
 import { Dispatch, SetStateAction } from "react";
-import { TaskFilterOption } from "../../types/todo";
 
 import styles from "./TodosListFilter.module.css";
+
+export type TaskFilterOption = "all" | "active" | "completed";
 
 interface TodosListFilterProps {
   filter: TaskFilterOption;

@@ -5,10 +5,10 @@ import axios from "axios";
 
 import { AddTodoInput } from "./AddTodoInput";
 import { ClearCompletedButton } from "./ClearCompletedButton";
-import { Task, TaskFilterOption } from "../../types/todo";
+import { Task } from "../../types/todo";
 import { TodosCounter } from "./TodosCounter";
 import { TodosList } from "./TodosList";
-import { TodosListFilter } from "./TodosListFilter";
+import { TaskFilterOption, TodosListFilter } from "./TodosListFilter";
 
 import styles from "./TodosApp.module.css";
 
@@ -81,7 +81,7 @@ export function TodosApp() {
       <footer id="tooter" className={styles.footer}>
         <TodosCounter tasks={tasks} />
         <TodosListFilter filter={filter} setFilter={setFilter} />
-        <ClearCompletedButton tasks={tasks} />
+        <ClearCompletedButton tasks={tasks} refetchTasks={refetchTasks} />
       </footer>
     </section>
   );

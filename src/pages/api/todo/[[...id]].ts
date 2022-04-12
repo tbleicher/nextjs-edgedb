@@ -8,6 +8,22 @@ const handler = async (req: NextApiRequest, res: NextApiResponse, db: TaskDbInte
   const id: string | undefined = req.query.id?.[0];
   const title: string | undefined = req.body.title;
 
+  // DELETE /api/todo/:id => remove task identified by id
+  if (req.method === "DELETE" && id) {
+    const useCase = new UseCases.DeleteTaskUseCase(db);
+    await useCase.execute(id);
+
+    return res.status(200).json({ result: "ok" });
+  }
+
+  // DELETE /api/todo/ => remove completed tasks
+  if (req.method === "DELETE") {
+    const useCase = new UseCases.DeleteCompletedTasks(db);
+    await useCase.execute();
+
+    return res.status(200).json({ result: "ok" });
+  }
+
   // GET /api/todo => list tasks
   if (req.method === "GET" && !id) {
     const useCase = new UseCases.ListTasksUseCase(db);
@@ -30,6 +46,13 @@ const handler = async (req: NextApiRequest, res: NextApiResponse, db: TaskDbInte
     const updatedTodo = await useCase.execute(id);
 
     return res.status(200).json(updatedTodo);
+  }
+
+  if (req.method === "PATCH") {
+    const useCase = new UseCases.MarkAllTasksCompleted(db);
+    const updatedTodos = await useCase.execute();
+
+    return res.status(200).json(updatedTodos);
   }
 
   // return error for anything else
