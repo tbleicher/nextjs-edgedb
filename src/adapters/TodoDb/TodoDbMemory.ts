@@ -21,16 +21,18 @@ export class TodoDbMemory implements TaskDbInterface {
     return task;
   }
 
-  async deleteTaskById(id: string): Promise<boolean> {
+  async deleteTaskById(id: string): Promise<Task | null> {
+    const deleted = this._tasks.find((task) => task.id === id);
     this._tasks = this._tasks.filter((task) => task.id !== id);
 
-    return true;
+    return deleted || null;
   }
 
-  async deleteCompletedTasks(): Promise<boolean> {
+  async deleteCompletedTasks(): Promise<Task[]> {
+    const completed = this._tasks.filter((task) => task.completed);
     this._tasks = this._tasks.filter((task) => !task.completed);
 
-    return true;
+    return completed;
   }
 
   async getTaskById(id: string): Promise<Task | null> {

@@ -7,8 +7,8 @@ export type Task = {
 
 export interface TaskDbInterface {
   createTask(title: string): Promise<Task | null>;
-  deleteCompletedTasks(): Promise<boolean>;
-  deleteTaskById(id: string): Promise<boolean>;
+  deleteCompletedTasks(): Promise<Task[]>;
+  deleteTaskById(id: string): Promise<Task | null>;
   getTaskById(id: string): Promise<Task | null>;
   listTasks(): Promise<Task[]>;
   markAllTasksCompleted(): Promise<Task[]>;
