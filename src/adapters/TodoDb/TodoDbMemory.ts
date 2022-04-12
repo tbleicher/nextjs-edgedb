@@ -33,7 +33,7 @@ export class TodoDbMemory implements TaskDbInterface {
     return true;
   }
 
-  async getTodoById(id: string): Promise<Task | null> {
+  async getTaskById(id: string): Promise<Task | null> {
     return this._tasks.find((task) => task.id === id) || null;
   }
 
@@ -48,8 +48,8 @@ export class TodoDbMemory implements TaskDbInterface {
     return updated;
   }
 
-  async toggleCompleted(id: string): Promise<Task | null> {
-    const task = await this.getTodoById(id);
+  async toggleTaskCompleted(id: string): Promise<Task | null> {
+    const task = await this.getTaskById(id);
     if (!task) return null;
 
     const updatedTask: Task = { ...task, completed: !task.completed };

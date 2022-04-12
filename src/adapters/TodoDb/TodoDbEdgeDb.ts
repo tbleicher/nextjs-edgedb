@@ -8,7 +8,7 @@ const TODO_DETAILS = `{
   completed,
 }`;
 
-const MARK_ALL_TASKS_COMPLETED_QUERY = `
+const MARK_ALL_TODOS_COMPLETED_QUERY = `
 with updated_todos := (
   with 
     todos_to_update := ( 
@@ -28,7 +28,7 @@ insert Todo {
   title := <str>$title
 }`;
 
-const DELETE_COMPLETED_TASKS = `
+const DELETE_COMPLETED_TODOS = `
 delete Todo
   filter .completed = true
 `;
@@ -65,11 +65,11 @@ export class TodoDbEdgeDb implements TaskDbInterface {
       title,
     })) as { id: string };
 
-    return this.getTodoById(createdTodo.id);
+    return this.getTaskById(createdTodo.id);
   }
 
   async deleteCompletedTasks(): Promise<boolean> {
-    await this.client.query(DELETE_COMPLETED_TASKS);
+    await this.client.query(DELETE_COMPLETED_TODOS);
 
     return true;
   }
@@ -82,7 +82,7 @@ export class TodoDbEdgeDb implements TaskDbInterface {
     return true;
   }
 
-  async getTodoById(id: string): Promise<Task | null> {
+  async getTaskById(id: string): Promise<Task | null> {
     return this.client.querySingle<Task>(GET_TODO_BY_ID_QUERY, {
       id,
     });
@@ -93,16 +93,16 @@ export class TodoDbEdgeDb implements TaskDbInterface {
   }
 
   async markAllTasksCompleted(): Promise<Task[]> {
-    const updated = await this.client.query<Task>(MARK_ALL_TASKS_COMPLETED_QUERY);
+    const updated = await this.client.query<Task>(MARK_ALL_TODOS_COMPLETED_QUERY);
 
     return updated;
   }
 
-  async toggleCompleted(id: string): Promise<Task | null> {
+  async toggleTaskCompleted(id: string): Promise<Task | null> {
     const updatedTodo = await this.client.querySingle<Task>(TOGGLE_COMPLETED_QUERY, {
       id,
     });
 
-    return this.getTodoById(updatedTodo?.id || "");
+    return this.getTaskById(updatedTodo?.id || "");
   }
 }

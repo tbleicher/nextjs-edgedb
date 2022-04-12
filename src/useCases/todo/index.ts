@@ -68,6 +68,6 @@ export class ToggleTaskUseCase {
   }
 
   async execute(id: string): Promise<Task | null> {
-    return this.db.toggleCompleted(id);
+    return this.db.toggleTaskCompleted(id);
   }
 }
