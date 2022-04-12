@@ -11,17 +11,17 @@ const handler = async (req: NextApiRequest, res: NextApiResponse, db: TaskDbInte
   // DELETE /api/todo/:id => remove task identified by id
   if (req.method === "DELETE" && id) {
     const useCase = new UseCases.DeleteTaskUseCase(db);
-    await useCase.execute(id);
+    const deletedTask = await useCase.execute(id);
 
-    return res.status(200).json({ result: "ok" });
+    return res.status(200).json(deletedTask);
   }
 
   // DELETE /api/todo/ => remove completed tasks
   if (req.method === "DELETE") {
     const useCase = new UseCases.DeleteCompletedTasks(db);
-    await useCase.execute();
+    const deletedTasks = await useCase.execute();
 
-    return res.status(200).json({ result: "ok" });
+    return res.status(200).json(deletedTasks);
   }
 
   // GET /api/todo => list tasks

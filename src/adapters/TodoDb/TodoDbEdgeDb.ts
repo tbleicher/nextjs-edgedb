@@ -9,7 +9,7 @@ const TODO_DETAILS = `{
 }`;
 
 const MARK_ALL_TODOS_COMPLETED_QUERY = `
-with updated_todos := (
+select (
   with 
     todos_to_update := ( 
       select Todo 
@@ -18,38 +18,28 @@ with updated_todos := (
     update Todo 
       filter Todo in todos_to_update
       set { completed := true }
-)
-select Todo ${TODO_DETAILS} 
-  filter Todo in updated_todos
-`;
+) ${TODO_DETAILS}`;
 
 const CREATE_TODO_QUERY = `
-with todo := (
+select (
   insert Todo {
     title := <str>$title
   }
-)
-select Todo ${TODO_DETAILS} 
-  filter Todo = todo
-`;
+) ${TODO_DETAILS}`;
 
 const DELETE_COMPLETED_TODOS = `
-with completed_todos := (
+select (
   delete Todo
-    filter .completed = true
-)
-select Todo ${TODO_DETAILS} 
-  filter Todo in completed_todos
-`;
+    filter
+      .completed = true
+) ${TODO_DETAILS}`;
 
 const DELETE_TODO_BY_ID_QUERY = `
-with todo := (
+select (
   delete Todo
-    filter .id = <uuid>$id
-)
-select Todo ${TODO_DETAILS} 
-  filter Todo = todo
-`;
+    filter
+      .id = <uuid>$id
+) ${TODO_DETAILS}`;
 
 const LIST_TODOS_QUERY = `
 select Todo ${TODO_DETAILS}
@@ -61,14 +51,14 @@ select Todo ${TODO_DETAILS}
 `;
 
 const TOGGLE_TASK_COMPLETED_QUERY = `
-with updated_todo := (
+select (
   update Todo
-    filter .id = <uuid>$id
-    set { completed := not .completed }
-)
-select Todo ${TODO_DETAILS} 
-  filter Todo = updated_todo
-`;
+    filter 
+      .id = <uuid>$id
+    set { 
+      completed := not .completed
+    }
+) ${TODO_DETAILS}`;
 
 export class TodoDbEdgeDb implements TaskDbInterface {
   private client: Client;
