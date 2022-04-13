@@ -1,26 +1,13 @@
-import { useState } from "react";
-import { useQuery } from "react-query";
-
-import axios from "axios";
+import { TaskFilterOption, TodosListFilter } from "./TodosListFilter";
 
 import { AddTodoInput } from "./AddTodoInput";
 import { ClearCompletedButton } from "./ClearCompletedButton";
 import { Task } from "../../types/todo";
 import { TodosCounter } from "./TodosCounter";
 import { TodosList } from "./TodosList";
-import { TaskFilterOption, TodosListFilter } from "./TodosListFilter";
-
 import styles from "./TodosApp.module.css";
-
-type TasksListQueryState = {
-  isLoading: boolean;
-  refetchTasks: () => {};
-  tasks: Task[];
-};
-
-type TaskSerialised = Omit<Task, "createdAt"> & {
-  createdAt: string;
-};
+import { useState } from "react";
+import { useTasksList } from "../../hooks/useTasksList";
 
 function filterTasksByStatus(status: TaskFilterOption) {
   return (task: Task): boolean => {
@@ -30,29 +17,9 @@ function filterTasksByStatus(status: TaskFilterOption) {
     if (status === "completed") {
       return task.completed;
     }
+
+    // return true for all tasks
     return true;
-  };
-}
-
-function sortByCreatedAt(a: Task, b: Task) {
-  return b.createdAt.getTime() - a.createdAt.getTime();
-}
-
-function useTasksList(): TasksListQueryState {
-  const queryState = useQuery<TaskSerialised[], Error, Task[]>(
-    "todos",
-    () => axios.get("/api/todo").then((res) => res.data),
-    {
-      select: (tasks) => tasks.map((task) => ({ ...task, createdAt: new Date(task.createdAt) })),
-    }
-  );
-
-  const tasks = queryState.data?.sort(sortByCreatedAt) || [];
-
-  return {
-    isLoading: queryState.isLoading,
-    refetchTasks: queryState.refetch,
-    tasks,
   };
 }
 

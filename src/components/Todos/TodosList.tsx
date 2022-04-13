@@ -1,11 +1,9 @@
-import { useMutation } from "react-query";
-import axios from "axios";
-
 import { ListItem } from "./ListItem";
 import { Task } from "../../types/todo";
-import { onError } from "../../utils/api";
-
 import styles from "./TodosList.module.css";
+import { useDeleteTaskMutation } from "../../hooks/useDeleteTaskMutation";
+import { useMarkAllTasksCompletedMutation } from "../../hooks/useMarkAllTasksCompletedMutation";
+import { useToggleTaskMutation } from "../../hooks/useToggleTaskMutation";
 
 interface TodosListProps {
   refetchTasks: () => void;
@@ -13,35 +11,9 @@ interface TodosListProps {
 }
 
 export function TodosList({ tasks, refetchTasks }: TodosListProps) {
-  const { mutate: deleteTask } = useMutation(
-    (id: string) => {
-      return axios.delete(`/api/todo/${id}`);
-    },
-    {
-      onSuccess: refetchTasks,
-      onError,
-    }
-  );
-
-  const { mutate: markAllCompleted } = useMutation(
-    () => {
-      return axios.patch(`/api/todo/`);
-    },
-    {
-      onSuccess: refetchTasks,
-      onError,
-    }
-  );
-
-  const { mutate: toggleTask } = useMutation(
-    (id: string) => {
-      return axios.patch(`/api/todo/${id}`);
-    },
-    {
-      onSuccess: refetchTasks,
-      onError,
-    }
-  );
+  const { mutate: deleteTask } = useDeleteTaskMutation(refetchTasks);
+  const { mutate: markAllCompleted } = useMarkAllTasksCompletedMutation(refetchTasks);
+  const { mutate: toggleTask } = useToggleTaskMutation(refetchTasks);
 
   return (
     <section className="main">
