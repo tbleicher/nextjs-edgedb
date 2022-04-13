@@ -3,12 +3,12 @@ import { useMutation, useQueryClient } from "react-query";
 import { Task } from "../types/todo";
 import axios from "axios";
 
-export const useMarkAllTasksCompletedMutation = () => {
+export const useDeleteCompletedTasksMutation = () => {
   const queryClient = useQueryClient();
 
   const mutate = useMutation(
     () => {
-      return axios.patch(`/api/todo`);
+      return axios.delete(`/api/todo`);
     },
     {
       onMutate: async () => {
@@ -17,12 +17,10 @@ export const useMarkAllTasksCompletedMutation = () => {
         const cachedTodos: Task[] =
           queryClient.getQueryData<Task[]>("todos") || [];
 
-        // set all tasks in cache to completed
+        // remove completed tasks from cached list
         queryClient.setQueryData<Task[]>(
           "todos",
-          cachedTodos.map((task) =>
-            task.completed ? task : { ...task, completed: true }
-          )
+          cachedTodos.filter((task) => !task.completed)
         );
       },
       onError: () => {

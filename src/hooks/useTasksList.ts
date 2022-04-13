@@ -4,7 +4,6 @@ import { useQuery } from "react-query";
 
 type TasksListQueryState = {
   isLoading: boolean;
-  refetchTasks: () => {};
   tasks: Task[];
 };
 
@@ -30,7 +29,6 @@ export function useTasksList(): TasksListQueryState {
 
   return {
     isLoading: queryState.isLoading,
-    refetchTasks: queryState.refetch,
     tasks,
   };
 }

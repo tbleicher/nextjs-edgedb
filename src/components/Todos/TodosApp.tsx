@@ -24,7 +24,7 @@ function filterTasksByStatus(status: TaskFilterOption) {
 }
 
 export function TodosApp() {
-  const { isLoading, refetchTasks, tasks } = useTasksList();
+  const { isLoading, tasks } = useTasksList();
 
   const [filter, setFilter] = useState<TaskFilterOption>("all");
   const filteredTasks: Task[] = tasks.filter(filterTasksByStatus(filter));
@@ -48,7 +48,7 @@ export function TodosApp() {
       <footer id="tooter" className={styles.footer}>
         <TodosCounter tasks={tasks} />
         <TodosListFilter filter={filter} setFilter={setFilter} />
-        <ClearCompletedButton tasks={tasks} refetchTasks={refetchTasks} />
+        <ClearCompletedButton tasks={tasks} />
       </footer>
     </section>
   );

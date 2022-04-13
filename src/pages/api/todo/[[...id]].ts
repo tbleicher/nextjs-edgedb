@@ -1,9 +1,15 @@
-import { NextApiRequest, NextApiResponse } from "next";
-import { TodoDbEdgeDb } from "../../../adapters/TodoDb/TodoDbEdgeDb";
-import { TaskDbInterface } from "../../../types/todo";
 import * as UseCases from "../../../useCases/todo";
 
-const handler = async (req: NextApiRequest, res: NextApiResponse, db: TaskDbInterface = new TodoDbEdgeDb()) => {
+import { NextApiRequest, NextApiResponse } from "next";
+
+import { TaskDbInterface } from "../../../types/todo";
+import { TodoDbEdgeDb } from "../../../adapters/TodoDb/TodoDbEdgeDb";
+
+const handler = async (
+  req: NextApiRequest,
+  res: NextApiResponse,
+  db: TaskDbInterface = new TodoDbEdgeDb()
+) => {
   // get id and title from request data
   const id: string | undefined = req.query.id?.[0];
   const title: string | undefined = req.body.title;
@@ -16,7 +22,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse, db: TaskDbInte
     return res.status(200).json(deletedTask);
   }
 
-  // DELETE /api/todo/ => remove completed tasks
+  // DELETE /api/todo => remove completed tasks
   if (req.method === "DELETE") {
     const useCase = new UseCases.DeleteCompletedTasks(db);
     const deletedTasks = await useCase.execute();

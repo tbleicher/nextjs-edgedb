@@ -1,32 +1,23 @@
-import axios from "axios";
-import { useMutation } from "react-query";
 import { Task } from "../../types/todo";
-import { onError } from "../../utils/api";
-
 import styles from "./ClearCompletedButton.module.css";
+import { useDeleteCompletedTasksMutation } from "../../hooks/useDeleteCompletedTasksMutation";
 
 interface ClearCompletedButtonProps {
-  refetchTasks: () => void;
   tasks: Task[];
 }
 
-export function ClearCompletedButton({ tasks, refetchTasks }: ClearCompletedButtonProps) {
-  const { mutate: deleteCompletedTasks } = useMutation(
-    () => {
-      return axios.delete(`/api/todo/`);
-    },
-    {
-      onSuccess: refetchTasks,
-      onError,
-    }
-  );
+export function ClearCompletedButton({ tasks }: ClearCompletedButtonProps) {
+  const { mutate: deleteCompletedTasks } = useDeleteCompletedTasksMutation();
 
   const hideButton = tasks.every((task) => !task.completed);
 
   if (hideButton) return null;
 
   return (
-    <button className={styles["clear-completed"]} onClick={() => deleteCompletedTasks()}>
+    <button
+      className={styles["clear-completed"]}
+      onClick={() => deleteCompletedTasks()}
+    >
       Clear completed
     </button>
   );
