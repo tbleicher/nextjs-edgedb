@@ -1,16 +1,35 @@
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
+
+import { Task } from "../types/todo";
 import axios from "axios";
 
-import { onError } from "../utils/api";
+export const useToggleTaskMutation = () => {
+  const queryClient = useQueryClient();
 
-export const useToggleTaskMutation = (refetchTasks: () => void) => {
   const mutate = useMutation(
     (id: string) => {
       return axios.patch(`/api/todo/${id}`);
     },
     {
-      onSuccess: refetchTasks,
-      onError,
+      onMutate: async (id: string) => {
+        await queryClient.cancelQueries("todos");
+
+        const cachedTodos: Task[] =
+          queryClient.getQueryData<Task[]>("todos") || [];
+
+        // set all tasks in cache to completed
+        queryClient.setQueryData<Task[]>(
+          "todos",
+          cachedTodos.map((task) =>
+            task.id === id ? { ...task, completed: !task.completed } : task
+          )
+        );
+      },
+      onError: () => {
+        // force reload from server by invalidating cache
+        queryClient.invalidateQueries("todos");
+      },
+      // onSuccess - no update required
     }
   );
 

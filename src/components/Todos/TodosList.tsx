@@ -6,24 +6,32 @@ import { useMarkAllTasksCompletedMutation } from "../../hooks/useMarkAllTasksCom
 import { useToggleTaskMutation } from "../../hooks/useToggleTaskMutation";
 
 interface TodosListProps {
-  refetchTasks: () => void;
   tasks: Task[];
 }
 
-export function TodosList({ tasks, refetchTasks }: TodosListProps) {
-  const { mutate: deleteTask } = useDeleteTaskMutation(refetchTasks);
-  const { mutate: markAllCompleted } = useMarkAllTasksCompletedMutation(refetchTasks);
-  const { mutate: toggleTask } = useToggleTaskMutation(refetchTasks);
+export function TodosList({ tasks }: TodosListProps) {
+  const { mutate: deleteTask } = useDeleteTaskMutation();
+  const { mutate: markAllCompleted } = useMarkAllTasksCompletedMutation();
+  const { mutate: toggleTask } = useToggleTaskMutation();
 
   return (
     <section className="main">
       <div className="view">
-        <button id="toggle-all" className={styles["toggle-all"]} onClick={() => markAllCompleted()} />
+        <button
+          id="toggle-all"
+          className={styles["toggle-all"]}
+          onClick={() => markAllCompleted()}
+        />
         <label htmlFor="toggle-all">Mark all as complete</label>
       </div>
       <ul className={styles["todo-list"]}>
         {tasks.map((task) => (
-          <ListItem key={task.id} task={task} deleteTask={deleteTask} toggleTask={toggleTask} />
+          <ListItem
+            key={task.id}
+            task={task}
+            deleteTask={deleteTask}
+            toggleTask={toggleTask}
+          />
         ))}
       </ul>
     </section>

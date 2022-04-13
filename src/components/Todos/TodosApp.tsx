@@ -43,7 +43,7 @@ export function TodosApp() {
         <AddTodoInput />
       </header>
 
-      <TodosList refetchTasks={refetchTasks} tasks={filteredTasks} />
+      <TodosList tasks={filteredTasks} />
 
       <footer id="tooter" className={styles.footer}>
         <TodosCounter tasks={tasks} />
