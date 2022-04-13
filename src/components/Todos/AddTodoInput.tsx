@@ -1,14 +1,8 @@
-import axios from "axios";
-import { useMutation } from "react-query";
-import { onError } from "../../utils/api";
-
 import styles from "./AddTodoInput.module.css";
+import { useAddTaskMutation } from "../../hooks/useAddTaskMutation";
 
-export function AddTodoInput({ refetchTasks }: { refetchTasks: () => void }) {
-  const addTask = useMutation((title: string) => axios.post("/api/todo", { title }), {
-    onSuccess: refetchTasks,
-    onError,
-  });
+export function AddTodoInput() {
+  const { mutate: addTask } = useAddTaskMutation();
 
   return (
     <input
@@ -18,7 +12,7 @@ export function AddTodoInput({ refetchTasks }: { refetchTasks: () => void }) {
       onKeyDown={(e) => {
         const title = e.currentTarget.value.trim();
         if (e.key === "Enter" && title) {
-          addTask.mutate(title);
+          addTask(title);
           e.currentTarget.value = "";
         }
       }}

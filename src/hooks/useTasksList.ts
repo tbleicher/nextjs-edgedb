@@ -1,5 +1,4 @@
 import { Task } from "../types/todo";
-import { TaskFilterOption } from "../components/Todos/TodosListFilter";
 import axios from "axios";
 import { useQuery } from "react-query";
 
@@ -13,18 +12,6 @@ type TaskSerialised = Omit<Task, "createdAt"> & {
   createdAt: string;
 };
 
-function filterTasksByStatus(status: TaskFilterOption) {
-  return (task: Task): boolean => {
-    if (status === "active") {
-      return !task.completed;
-    }
-    if (status === "completed") {
-      return task.completed;
-    }
-    return true;
-  };
-}
-
 function sortByCreatedAt(a: Task, b: Task) {
   return b.createdAt.getTime() - a.createdAt.getTime();
 }
@@ -34,7 +21,8 @@ export function useTasksList(): TasksListQueryState {
     "todos",
     () => axios.get("/api/todo").then((res) => res.data),
     {
-      select: (tasks) => tasks.map((task) => ({ ...task, createdAt: new Date(task.createdAt) })),
+      select: (tasks) =>
+        tasks.map((task) => ({ ...task, createdAt: new Date(task.createdAt) })),
     }
   );
 

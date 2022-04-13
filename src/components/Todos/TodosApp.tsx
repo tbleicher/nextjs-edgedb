@@ -40,7 +40,7 @@ export function TodosApp() {
     <section className={styles.todoapp}>
       <header className="header">
         <h1 className={styles.title}>Todos</h1>
-        <AddTodoInput refetchTasks={refetchTasks} />
+        <AddTodoInput />
       </header>
 
       <TodosList refetchTasks={refetchTasks} tasks={filteredTasks} />
