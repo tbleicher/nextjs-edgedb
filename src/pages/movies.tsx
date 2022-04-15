@@ -1,16 +1,15 @@
 import { Footer } from "../components/Footer/Footer";
 import Head from "next/head";
-import { TodosApp } from "../components/Todos/TodosApp";
 
-export default function TodosPage() {
+export default function MoviesPage() {
   return (
     <>
       <Head>
-        <title>Todos</title>
+        <title>Movies</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <TodosApp />
+      <h1>Todo: Movies page</h1>
 
       <Footer />
     </>

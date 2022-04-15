@@ -1,11 +1,14 @@
+import { Footer } from "../components/Footer/Footer";
 import Head from "next/head";
+import Link from "next/link";
 
-export default function TodosPage() {
+export default function Home() {
   return (
     <>
       <Head>
         <title>Next.js Index</title>
         <link rel="icon" href="/favicon.ico" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
 
       <h1>Welcome to Next.js!</h1>
@@ -13,20 +16,24 @@ export default function TodosPage() {
       <section className="main">
         <ul>
           <li>
-            <a href="./todo">Todo</a>
+            <Link href="./todo">
+              <a>Todo</a>
+            </Link>
+          </li>
+          <li>
+            <Link href="./movies">
+              <a>Movies</a>
+            </Link>
+          </li>
+          <li>
+            <Link href="./about">
+              <a>About</a>
+            </Link>
           </li>
         </ul>
       </section>
 
-      <footer className="info">
-        {/* Change this out with your name and url ↓ */}
-        <p>
-          Created with <a href="http://edgedb.com">EdgeDB</a>
-        </p>
-        <p>
-          Part of <a href="http://todomvc.com">TodoMVC</a>
-        </p>
-      </footer>
+      <Footer />
     </>
   );
 }
