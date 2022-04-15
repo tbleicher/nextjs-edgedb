@@ -1,15 +1,20 @@
 import styles from "./Footer.module.css";
+import { Footer as MantineFooter } from "@mantine/core";
 
-export function Footer() {
+interface FooterProps {
+  height?: number;
+  p?: string;
+}
+
+export function Footer({ height = 60, p = "md" }: FooterProps) {
   return (
-    <footer className={styles.info}>
-      {/* Change this out with your name and url ↓ */}
+    <MantineFooter height={height} p={p} className={styles.info}>
       <p>
         Created with <a href="http://edgedb.com">EdgeDB</a>
       </p>
       <p>
         Part of <a href="http://todomvc.com">TodoMVC</a>
       </p>
-    </footer>
+    </MantineFooter>
   );
 }

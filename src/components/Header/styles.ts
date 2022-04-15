@@ -2,22 +2,16 @@ import { MantineTheme } from "@mantine/styles/lib/theme/types/MantineTheme";
 
 export function createStylesFromTheme(theme: MantineTheme) {
   return {
-    inner: {
-      display: "flex",
-      justifyContent: "space-between",
-      alignItems: "center",
-    },
-
-    links: {
-      [theme.fn.smallerThan("sm")]: {
-        display: "none",
-      },
-    },
-
     burger: {
       [theme.fn.largerThan("sm")]: {
         display: "none",
       },
+    },
+
+    inner: {
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "center",
     },
 
     link: {
@@ -43,6 +37,19 @@ export function createStylesFromTheme(theme: MantineTheme) {
 
     linkLabel: {
       marginRight: 5,
+    },
+
+    links: {
+      [theme.fn.smallerThan("sm")]: {
+        display: "none",
+      },
+      [theme.fn.largerThan("lg")]: {
+        display: "none",
+      },
+    },
+
+    logoButton: {
+      padding: 4,
     },
   };
 }

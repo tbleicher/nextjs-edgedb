@@ -1,10 +1,10 @@
 import {
   Burger,
-  Button,
   Container,
   Group,
   Header as MantineHeader,
   createStyles,
+  Button,
 } from "@mantine/core";
 
 import { HeaderLink } from "./types";
@@ -14,18 +14,24 @@ import { ProfileButton } from "./ProfileButton";
 import React from "react";
 import { SubMenu } from "./SubMenu";
 import { createStylesFromTheme } from "./styles";
-import { useBooleanToggle } from "@mantine/hooks";
+import Link from "next/link";
 
 const useStyles = createStyles(createStylesFromTheme);
 
 interface HeaderProps {
   height?: number;
   links?: HeaderLink[];
+  navbarOpen: boolean;
+  toggleNavbar: () => void;
 }
 
-export function Header({ height = 60, links = [] }: HeaderProps) {
+export function Header({
+  height = 60,
+  links = [],
+  navbarOpen,
+  toggleNavbar,
+}: HeaderProps) {
   const { classes } = useStyles();
-  const [opened, toggleOpened] = useBooleanToggle(false);
 
   const items = links.map((link) => {
     if (link.links?.length) {
@@ -36,21 +42,30 @@ export function Header({ height = 60, links = [] }: HeaderProps) {
   });
 
   return (
-    <MantineHeader height={height} sx={{ borderBottom: 0 }} mb={120}>
+    <MantineHeader height={height}>
       <Container className={classes.inner} style={{ height }} fluid>
         <Group>
           <Burger
-            opened={opened}
-            onClick={() => toggleOpened()}
+            opened={navbarOpen}
+            onClick={() => toggleNavbar()}
             className={classes.burger}
             size="sm"
           />
-          <Image
-            alt="company logo"
-            src="/logoipsum-logo-17.svg"
-            width={127}
-            height={39}
-          />
+          <Link href="/" passHref>
+            <Button
+              className={classes.logoButton}
+              component="a"
+              variant="subtle"
+              size="lg"
+            >
+              <Image
+                alt="company logo"
+                src="/logoipsum-logo-17.svg"
+                height={39}
+                width={127}
+              />
+            </Button>
+          </Link>
         </Group>
         <Group spacing={5} className={classes.links}>
           {items}

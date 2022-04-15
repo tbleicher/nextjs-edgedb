@@ -1,17 +1,12 @@
-import { Footer } from "../Footer/Footer";
-import { Header } from "../Header/Header";
-import { ReactElement } from "react";
-import { links } from "./links";
+import { ReactNode } from "react";
+import { AppShell } from "../AppShell/AppShell";
+import { useLinks } from "../../hooks/useLinks";
 
 interface LayoutProps {
-  children: ReactElement | ReactElement[];
+  children: ReactNode | ReactNode[];
 }
+
 export function Layout({ children }: LayoutProps) {
-  return (
-    <>
-      <Header links={links} />
-      {children}
-      <Footer />
-    </>
-  );
+  const links = useLinks();
+  return <AppShell links={links}>{children}</AppShell>;
 }

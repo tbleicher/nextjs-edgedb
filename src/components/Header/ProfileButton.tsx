@@ -12,6 +12,7 @@ import {
   Settings,
   SwitchHorizontal,
   Trash,
+  Logout,
 } from "tabler-icons-react";
 import React, { useState } from "react";
 
@@ -72,7 +73,9 @@ export function ProfileButton() {
       }
     >
       <Menu.Label>Settings</Menu.Label>
+
       <Menu.Item icon={<Settings size={14} />}>Account settings</Menu.Item>
+      <Menu.Item icon={<Logout size={14} />}>Logout</Menu.Item>
 
       <Divider />
 
