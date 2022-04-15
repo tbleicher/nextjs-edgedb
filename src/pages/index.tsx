@@ -1,39 +1,23 @@
-import { Footer } from "../components/Footer/Footer";
+import { Container, Text } from "@mantine/core";
+
 import Head from "next/head";
-import Link from "next/link";
+import { Layout } from "../components/Layout/Layout";
 
 export default function Home() {
   return (
-    <>
+    <Layout>
       <Head>
         <title>Next.js Index</title>
         <link rel="icon" href="/favicon.ico" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
+      <Container>
+        <h1>Welcome to Next.js!</h1>
 
-      <h1>Welcome to Next.js!</h1>
-
-      <section className="main">
-        <ul>
-          <li>
-            <Link href="./todo">
-              <a>Todo</a>
-            </Link>
-          </li>
-          <li>
-            <Link href="./movies">
-              <a>Movies</a>
-            </Link>
-          </li>
-          <li>
-            <Link href="./about">
-              <a>About</a>
-            </Link>
-          </li>
-        </ul>
-      </section>
-
-      <Footer />
-    </>
+        <section className="main">
+          <Text>Todo: index page</Text>
+        </section>
+      </Container>
+    </Layout>
   );
 }

@@ -38,10 +38,7 @@ export function TodosApp() {
 
   return (
     <section className={styles.todoapp}>
-      <header className="header">
-        <h1 className={styles.title}>Todos</h1>
-        <AddTodoInput />
-      </header>
+      <AddTodoInput />
 
       <TodosList tasks={filteredTasks} />
 
