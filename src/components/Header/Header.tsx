@@ -10,7 +10,7 @@ import {
 import { HeaderLink } from "./types";
 import Image from "next/image";
 import { MenuItem } from "./MenuItem";
-import { ProfileButton } from "./ProfileButton";
+import { ProfileMenu } from "./ProfileMenu";
 import React from "react";
 import { SubMenu } from "./SubMenu";
 import { createStylesFromTheme } from "./styles";
@@ -70,7 +70,7 @@ export function Header({
         <Group spacing={5} className={classes.links}>
           {items}
         </Group>
-        <ProfileButton />
+        <ProfileMenu />
       </Container>
     </MantineHeader>
   );

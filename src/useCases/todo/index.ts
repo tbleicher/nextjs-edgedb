@@ -7,7 +7,7 @@ export class DeleteTaskUseCase {
     this.db = db;
   }
 
-  async execute(id: string): Promise<boolean> {
+  async execute(id: string): Promise<Task | null> {
     return this.db.deleteTaskById(id);
   }
 }
@@ -19,7 +19,7 @@ export class DeleteCompletedTasks {
     this.db = db;
   }
 
-  async execute(): Promise<boolean> {
+  async execute(): Promise<Task[]> {
     return this.db.deleteCompletedTasks();
   }
 }
