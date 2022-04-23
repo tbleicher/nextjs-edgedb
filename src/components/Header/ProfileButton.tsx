@@ -1,36 +1,19 @@
-import { Avatar, Group, Text } from "@mantine/core";
-import { ChevronDown } from "tabler-icons-react";
-import React from "react";
-import { useQuery, UseQueryResult } from "react-query";
-import axios from "axios";
-import { Profile } from "../../types/user";
+import React from 'react';
+import { ChevronDown } from 'tabler-icons-react';
 
-type ProfileQueryResult = {
-  profile: Profile | null;
+import { Avatar, Group, Text } from '@mantine/core';
+
+import { useProfile } from '../../hooks/useProfile';
+import { Profile } from '../../types/user';
+
+const getUsername = (profile: Profile | null, loading: boolean) => {
+  if (loading) return "loading ...";
+  if (!profile) return "log in";
+  return profile.userName;
 };
 
-function useProfile() {
-  return useQuery<ProfileQueryResult>(
-    "profile",
-    () =>
-      axios.get("/api/profile").then((data) => {
-        return data?.data;
-      }),
-    { onError: (err) => console.log(err) }
-  );
-}
-
-function getName(queryResult: UseQueryResult<ProfileQueryResult>) {
-  const { data, isLoading } = queryResult;
-  if (isLoading) return "loading ...";
-  if (!data?.profile) return "log in";
-
-  return `${data.profile.firstName} ${data.profile.lastName}`;
-}
-
 export function ProfileButton() {
-  const result = useProfile();
-  const { profile } = result.data || {};
+  const { profile, loading } = useProfile();
 
   return (
     <Group spacing={7}>
@@ -41,7 +24,7 @@ export function ProfileButton() {
         size={36}
       />
       <Text weight={500} size="sm" sx={{ lineHeight: 1 }} mr={3}>
-        {getName(result)}
+        {getUsername(profile, loading)}
       </Text>
       <ChevronDown size={12} />
     </Group>

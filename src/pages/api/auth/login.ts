@@ -1,14 +1,11 @@
-import { NextApiRequest, NextApiResponse } from "next";
-import { ProfileDbMemory } from "../../../adapters/ProfileDb/ProfileDbMemory";
-import { UserDbMemory } from "../../../adapters/UserDb/UserDbMemory";
-import {
-  Profile,
-  ProfileDbInterface,
-  UserDbInterface,
-} from "../../../types/user";
-import { AuthenticateUserUseCase } from "../../../useCases/auth";
-import { GetUserProfileUseCase } from "../../../useCases/profile";
-import { withSession } from "../../../utils/session";
+import { NextApiRequest, NextApiResponse } from 'next';
+
+import { ProfileDbMemory } from '../../../adapters/ProfileDb/ProfileDbMemory';
+import { UserDbMemory } from '../../../adapters/UserDb/UserDbMemory';
+import { Profile, ProfileDbInterface, UserDbInterface } from '../../../types/user';
+import { AuthenticateUserUseCase } from '../../../useCases/auth';
+import { GetUserProfileUseCase } from '../../../useCases/profile';
+import { withSession } from '../../../utils/session';
 
 type LoginResponse = {
   profile: Profile | null;
@@ -23,6 +20,7 @@ async function loginHandler(
   const username: string = req.body.username || "";
   const password: string = req.body.password || "";
 
+  // TODO: add error handling
   const useCase = new AuthenticateUserUseCase(userDb);
   const user = await useCase.execute(username, password);
 

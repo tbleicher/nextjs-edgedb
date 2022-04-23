@@ -1,10 +1,11 @@
-import { Divider, Menu, createStyles, UnstyledButton } from "@mantine/core";
-import { Settings, Trash, Logout } from "tabler-icons-react";
-import React, { useState } from "react";
-import { useMutation, useQueryClient } from "react-query";
-import axios from "axios";
-import { LoginButton } from "./LoginButton";
-import { ProfileButton } from "./ProfileButton";
+import React, { useState } from 'react';
+import { Logout, Settings, Trash } from 'tabler-icons-react';
+
+import { createStyles, Divider, Menu, UnstyledButton } from '@mantine/core';
+
+import { useLogoutMutation } from '../../hooks/useLogoutMutation';
+import { LoginMenuItem } from './LoginMenuItem';
+import { ProfileButton } from './ProfileButton';
 
 const useStyles = createStyles((theme) => ({
   user: {
@@ -28,23 +29,6 @@ const useStyles = createStyles((theme) => ({
     },
   },
 }));
-
-function useLogoutMutation() {
-  const queryClient = useQueryClient();
-
-  const mutation = useMutation(
-    () => {
-      return axios.post("/api/auth/logout");
-    },
-    {
-      onSettled: () => {
-        queryClient.invalidateQueries("profile");
-      },
-    }
-  );
-
-  return mutation;
-}
 
 export function ProfileMenu() {
   const { classes, cx } = useStyles();
@@ -78,10 +62,10 @@ export function ProfileMenu() {
 
       <Menu.Label>Change account</Menu.Label>
 
-      <LoginButton username="ada@a.example.com" />
-      <LoginButton username="andy@a.example.com" />
-      <LoginButton username="katherine@k.example.com" />
-      <LoginButton username="ken@k.example.com" />
+      <LoginMenuItem username="ada@a.example.com" />
+      <LoginMenuItem username="andy@a.example.com" />
+      <LoginMenuItem username="katherine@k.example.com" />
+      <LoginMenuItem username="ken@k.example.com" />
 
       <Divider />
 

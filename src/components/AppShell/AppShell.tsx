@@ -1,17 +1,18 @@
-import React, { ReactNode, useState } from "react";
-import { AppShell as MantineAppShell, useMantineTheme } from "@mantine/core";
-import { Footer } from "../Footer/Footer";
-import { links } from "../../hooks/useLinks";
-import { Header } from "../Header/Header";
-import { Navbar } from "../Navbar/Navbar";
-import { HeaderLink } from "../Header/types";
+import React, { ReactNode, useState } from 'react';
+
+import { AppShell as MantineAppShell, useMantineTheme } from '@mantine/core';
+
+import { useLinks } from '../../hooks/useLinks';
+import { Footer } from '../Footer/Footer';
+import { Header } from '../Header/Header';
+import { Navbar } from '../Navbar/Navbar';
 
 interface AppShellProps {
   children: ReactNode | ReactNode[];
-  links?: HeaderLink[];
 }
 
 export function AppShell({ children }: AppShellProps) {
+  const links = useLinks();
   const theme = useMantineTheme();
   const [navbarOpen, setNavbarOpen] = useState(false);
   const toggleNavbar = () => setNavbarOpen(!navbarOpen);

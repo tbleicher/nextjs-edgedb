@@ -1,5 +1,5 @@
-import { SessionUser } from "../../types/session";
-import { UserDbInterface } from "../../types/user";
+import { SessionUser } from '../../types/session';
+import { UserDbInterface } from '../../types/user';
 
 export class AuthenticateUserUseCase {
   db: UserDbInterface;

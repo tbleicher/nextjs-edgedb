@@ -1,4 +1,4 @@
-import { SessionUser } from "./session";
+import { SessionUser } from './session';
 
 export type UserData = SessionUser & {
   hash: string;
@@ -9,6 +9,7 @@ export type Profile = {
   firstName: string;
   lastName: string;
   imageUrl: string;
+  userName: string;
 };
 
 export interface ProfileDbInterface {
