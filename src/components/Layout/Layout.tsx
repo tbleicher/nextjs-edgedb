@@ -35,6 +35,7 @@ export function Layout({ children, requireLogin = true }: LayoutProps) {
           : theme.colors.gray[2]
       }
       size="lg"
+      title="Log in"
       withCloseButton={false}
     >
       <AuthenticationForm />

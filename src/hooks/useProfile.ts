@@ -27,7 +27,7 @@ function getProfile(
 
 export function useProfile(): { profile: Profile | null; loading: boolean } {
   const queryState = useQuery(
-    "profile",
+    ["profile"],
     () =>
       axios
         .get<ProfileQueryResult>("/api/profile")

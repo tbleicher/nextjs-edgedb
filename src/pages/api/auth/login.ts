@@ -2,7 +2,6 @@ import { NextApiRequest, NextApiResponse } from 'next';
 
 import { ProfileDbMemory } from '../../../adapters/ProfileDb/ProfileDbMemory';
 import { UserDbMemory } from '../../../adapters/UserDb/UserDbMemory';
-import { HTTPError } from '../../../errors';
 import { ErrorResponse } from '../../../types/api';
 import { Profile, ProfileDbInterface, UserDbInterface } from '../../../types/user';
 import { AuthenticateUserUseCase } from '../../../useCases/auth';

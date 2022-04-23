@@ -1,4 +1,7 @@
 import "@testing-library/jest-dom/extend-expect";
+import { mockServer } from './__tests__/helpers/mockServer'
+
+global.ResizeObserver = require('resize-observer-polyfill')
 
 expect.extend({
   toBeISODate(received) {
@@ -23,3 +26,9 @@ expect.extend({
         };
   },
 });
+
+
+// Establish API mocking before all tests.
+beforeAll(() => mockServer.listen())
+afterEach(() => mockServer.resetHandlers())
+afterAll(() => mockServer.close())
