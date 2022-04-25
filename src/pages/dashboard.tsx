@@ -1,10 +1,10 @@
-import { Container } from "@mantine/core";
-import Head from "next/head";
-import { Layout } from "../components/Layout/Layout";
+import Head from 'next/head';
+
+import { Container } from '@mantine/core';
 
 export default function AboutPage() {
   return (
-    <Layout>
+    <>
       <Head>
         <title>Dashboard</title>
         <link rel="icon" href="/favicon.ico" />
@@ -13,6 +13,6 @@ export default function AboutPage() {
       <Container>
         <h1>Todo: Dashboard page</h1>
       </Container>
-    </Layout>
+    </>
   );
 }

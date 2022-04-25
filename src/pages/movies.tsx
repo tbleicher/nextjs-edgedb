@@ -1,10 +1,10 @@
-import { Container } from "@mantine/core";
-import Head from "next/head";
-import { Layout } from "../components/Layout/Layout";
+import Head from 'next/head';
+
+import { Container } from '@mantine/core';
 
 export default function MoviesPage() {
   return (
-    <Layout>
+    <>
       <Head>
         <title>Movies</title>
         <link rel="icon" href="/favicon.ico" />
@@ -13,6 +13,6 @@ export default function MoviesPage() {
       <Container>
         <h1>Todo: Movies page</h1>
       </Container>
-    </Layout>
+    </>
   );
 }

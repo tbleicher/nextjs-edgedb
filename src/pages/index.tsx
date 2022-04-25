@@ -6,7 +6,7 @@ import { Layout } from '../components/Layout/Layout';
 
 export default function Home() {
   return (
-    <Layout>
+    <>
       <Head>
         <title>Next.js Index</title>
         <link rel="icon" href="/favicon.ico" />
@@ -19,6 +19,6 @@ export default function Home() {
           <Text>Todo: index page</Text>
         </section>
       </Container>
-    </Layout>
+    </>
   );
 }

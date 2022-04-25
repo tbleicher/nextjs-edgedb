@@ -1,9 +1,7 @@
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 
-import { Layout } from '../components/Layout/Layout';
-
-function RedirectAfterLogin() {
+export default function LoginPage() {
   const router = useRouter();
 
   useEffect(() => {
@@ -11,12 +9,4 @@ function RedirectAfterLogin() {
   }, [router]);
 
   return <div>redirecting ...</div>;
-}
-
-export default function LoginPage() {
-  return (
-    <Layout requireLogin={true}>
-      <RedirectAfterLogin />
-    </Layout>
-  );
 }

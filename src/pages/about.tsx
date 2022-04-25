@@ -2,11 +2,9 @@ import Head from 'next/head';
 
 import { Container } from '@mantine/core';
 
-import { Layout } from '../components/Layout/Layout';
-
 export default function AboutPage() {
   return (
-    <Layout>
+    <>
       <Head>
         <title>About</title>
         <link rel="icon" href="/favicon.ico" />
@@ -15,6 +13,6 @@ export default function AboutPage() {
       <Container>
         <h1>Todo: About page</h1>
       </Container>
-    </Layout>
+    </>
   );
 }
