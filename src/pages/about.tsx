@@ -1,6 +1,8 @@
-import { Container } from "@mantine/core";
-import Head from "next/head";
-import { Layout } from "../components/Layout/Layout";
+import Head from 'next/head';
+
+import { Container } from '@mantine/core';
+
+import { Layout } from '../components/Layout/Layout';
 
 export default function AboutPage() {
   return (

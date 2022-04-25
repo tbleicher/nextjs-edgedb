@@ -38,3 +38,9 @@ yarn-error.log*
 *.tsbuildinfo
 
 dbschema/edgeql-js
+
+# cypress
+cypress/downloads
+cypress/screenshots
+cypress/videos
+_cy_*

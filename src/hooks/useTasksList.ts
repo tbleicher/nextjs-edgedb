@@ -1,6 +1,7 @@
-import { Task } from "../types/todo";
-import axios from "axios";
-import { useQuery } from "react-query";
+import axios from 'axios';
+import { useQuery } from 'react-query';
+
+import { Task } from '../types/todo';
 
 type TasksListQueryState = {
   isLoading: boolean;
@@ -17,7 +18,7 @@ function sortByCreatedAt(a: Task, b: Task) {
 
 export function useTasksList(): TasksListQueryState {
   const queryState = useQuery<TaskSerialised[], Error, Task[]>(
-    "todos",
+    ["todos"],
     () => axios.get("/api/todo").then((res) => res.data),
     {
       select: (tasks) =>
