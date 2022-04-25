@@ -1,7 +1,5 @@
 /// <reference types="cypress" />
 
-import { Given, Then, When } from "cypress-cucumber-preprocessor/steps";
-
 const URLS: Record<string, string> = {
   home: "http://localhost:3000",
   todos: "http://localhost:3000/todo",
